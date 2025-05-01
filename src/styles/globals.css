@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom global styles */
+:root {
+  /* Professional Black, White, Brown color scheme */
+  --primary-color: #3E2723; /* Dark Brown */
+  --primary-dark: #1B0000; /* Almost Black Brown */
+  --primary-light: #5D4037; /* Medium Brown */
+  --secondary-color: #EFEBE9; /* Off-White */
+  --text-primary: #212121; /* Almost Black */
+  --text-secondary: #424242; /* Dark Gray */
+  --text-light: #757575; /* Medium Gray */
+  --success: #2E7D32; /* Forest Green */
+  --warning: #5D4037; /* Brown for warnings */
+  --error: #B71C1C; /* Dark Red */
+  --border-radius: 0.25rem;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  background-color: #f9fafb;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out;
+}
+
+/* Custom button styles */
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 font-medium text-sm rounded transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-1;
+}
+
+.btn-primary {
+  @apply bg-black text-white hover:bg-gray-900 focus:ring-gray-700;
+}
+
+.btn-secondary {
+  @apply bg-white text-black border border-gray-300 hover:bg-gray-100 focus:ring-gray-500;
+}
+
+.btn-white {
+  @apply bg-white text-black border border-gray-300 hover:bg-gray-50 focus:ring-gray-400;
+}
+
+.btn-sm {
+  @apply px-3 py-1.5 text-xs;
+}
+
+.btn-lg {
+  @apply px-5 py-2.5 text-base;
+}
+
+/* Custom card styles */
+.card {
+  @apply bg-white bg-opacity-90 rounded shadow-sm overflow-hidden border border-gray-200;
+}
+
+.card-header {
+  @apply px-4 py-3 bg-white bg-opacity-95 border-b border-gray-200;
+}
+
+.card-body {
+  @apply px-4 py-4;
+}
+
+.card-footer {
+  @apply px-4 py-3 bg-gray-50 bg-opacity-90 border-t border-gray-200;
+}
+
+/* Form styles */
+.form-group {
+  @apply mb-4;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.form-input {
+  @apply w-full px-4 py-2 border border-gray-300 bg-white bg-opacity-90 rounded focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500 transition-colors;
+}
+
+.form-input-error {
+  @apply border-red-300 focus:ring-red-500 focus:border-red-500;
+}
+
+.form-error {
+  @apply text-red-700 text-sm mt-1;
+}
+
+.form-hint {
+  @apply text-gray-500 text-sm mt-1;
+}
+
+/* Status badges */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium;
+}
+
+.badge-success {
+  @apply bg-green-100 bg-opacity-90 text-green-800;
+}
+
+.badge-warning {
+  @apply bg-gray-100 bg-opacity-90 text-gray-800;
+}
+
+.badge-info {
+  @apply bg-gray-100 bg-opacity-90 text-gray-800;
+}
+
+.badge-danger {
+  @apply bg-red-100 bg-opacity-90 text-red-800;
+}
+
+/* Custom container */
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Custom section */
+.section {
+  @apply py-12 md:py-16 lg:py-20;
+}
+
+/* Custom heading styles */
+.heading-1 {
+  @apply text-3xl font-bold tracking-tight text-black leading-tight;
+}
+
+.heading-2 {
+  @apply text-2xl font-bold text-black leading-tight;
+}
+
+.heading-3 {
+  @apply text-xl font-semibold text-black;
+}
+
+.heading-4 {
+  @apply text-lg font-semibold text-black;
+}
+
+/* Custom text styles */
+.text-body {
+  @apply text-base text-gray-800 leading-relaxed;
+}
+
+.text-small {
+  @apply text-sm text-gray-700;
+}
+
+.text-muted {
+  @apply text-gray-600 text-sm;
+}
+
+/* Custom divider */
+.divider {
+  @apply h-px w-full bg-gray-200 my-6;
+}

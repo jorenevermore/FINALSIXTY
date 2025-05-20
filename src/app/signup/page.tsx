@@ -50,7 +50,7 @@ export default function SignupPage() {
       return;
     }
 
-    // Validate location
+    // Validate location - but allow default location if map failed to load
     if (!location) {
       setError('Please select your barbershop location on the map');
       return;
@@ -97,6 +97,12 @@ export default function SignupPage() {
         createdAt, // Timestamp in milliseconds
         status: 'active',
       });
+
+      // Get the ID token
+      const idToken = await userCredential.user.getIdToken();
+
+      // Store the token in a cookie for the middleware to use
+      document.cookie = `firebaseToken=${idToken}; path=/; max-age=${60 * 60 * 24 * 5}`; // 5 days
 
       // Redirect will happen automatically due to the useEffect above
     } catch (error) {
@@ -319,9 +325,11 @@ export default function SignupPage() {
                           <button
                             type="button"
                             onClick={() => {
+                              // Allow continuing even without location in case map failed to load
                               if (!location) {
-                                setError('Please select your barbershop location on the map');
-                                return;
+                                // Use default location from Cebu City
+                                const defaultLocation = { lat: 10.3157, lng: 123.8854 };
+                                setLocation(defaultLocation);
                               }
                               setError(null);
                               nextStep();

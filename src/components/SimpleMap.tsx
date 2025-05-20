@@ -41,19 +41,56 @@ const SimpleMap: React.FC<SimpleMapProps> = ({ onLocationSelect, initialLocation
 
         // If not loaded, create a script tag to load it
         const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAAlwboaaSEPBpdZqSJXmbGIRdQS9TYHlc&libraries=places&v=weekly`;
+
+        // Use environment variable if available, otherwise fallback to hardcoded key
+        const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyAAlwboaaSEPBpdZqSJXmbGIRdQS9TYHlc';
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&v=weekly`;
         script.async = true;
         script.defer = true;
-        script.onload = initMap;
-        script.onerror = () => {
-          setError('Failed to load Google Maps. Please check your internet connection.');
+
+        // Set a timeout to handle cases where the script takes too long to load
+        const timeoutId = setTimeout(() => {
+          setError('Google Maps is taking too long to load. You can continue without setting a location and update it later.');
           setIsLoading(false);
+          // Set a default location so the form can still be submitted
+          if (!selectedLocation) {
+            const defaultLocation = DEFAULT_LOCATION;
+            setSelectedLocation(defaultLocation);
+            onLocationSelect(defaultLocation);
+          }
+        }, 5000); // 5 second timeout
+
+        script.onload = () => {
+          clearTimeout(timeoutId);
+          initMap();
         };
+
+        script.onerror = () => {
+          clearTimeout(timeoutId);
+          console.error('Failed to load Google Maps API');
+          setError('Failed to load Google Maps. You can continue without setting a location and update it later.');
+          setIsLoading(false);
+
+          // Set a default location so the form can still be submitted
+          if (!selectedLocation) {
+            const defaultLocation = DEFAULT_LOCATION;
+            setSelectedLocation(defaultLocation);
+            onLocationSelect(defaultLocation);
+          }
+        };
+
         document.head.appendChild(script);
       } catch (error) {
         console.error('Error setting up map:', error);
-        setError('Failed to initialize map. Please try again.');
+        setError('Failed to initialize map. You can continue without setting a location and update it later.');
         setIsLoading(false);
+
+        // Set a default location so the form can still be submitted
+        if (!selectedLocation) {
+          const defaultLocation = DEFAULT_LOCATION;
+          setSelectedLocation(defaultLocation);
+          onLocationSelect(defaultLocation);
+        }
       }
     };
 
